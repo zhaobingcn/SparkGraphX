@@ -1,0 +1,5 @@
+.idea
+target/*
+.txt
+/src/main/resource/*
+.iml
