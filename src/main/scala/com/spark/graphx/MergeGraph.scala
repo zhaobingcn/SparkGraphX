@@ -12,11 +12,11 @@ import scala.reflect.ClassTag
   */
 object MergeGraph {
 
-  def apply(graph1:Graph[Double, Double], graph2:Graph[Double, Double]): Unit ={
+  def apply(graph1:Graph[Double, Int], graph2:Graph[Double, Int]): Graph[Double, Int] = {
 
     val v = graph1.vertices.map(_._2).union(graph2.vertices.map(_._2)).distinct().zipWithIndex()
 
-    def edgesWithNewVeryexIds(g:Graph[Double, Double]) =
+    def edgesWithNewVeryexIds(g:Graph[Double, Int]) =
       g.triplets
       .map(et => (et.srcAttr, (et.attr, et.dstAttr)))
       .join(v)

@@ -13,7 +13,7 @@ object ImprovedPageRank {
 
     val sc = new SparkContext(conf)
 
-    val graph = GraphLoader.edgeListFile(sc, "src/main/resources/test_web.txt")
+    val graph = GraphLoader.edgeListFile(sc, "src/main/resources/web-Google.txt")
 
     //**********************计算顶点的出度数A,并更新edge的值为1/A以及更新顶点为1
 

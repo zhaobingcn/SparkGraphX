@@ -16,7 +16,7 @@ object NewImprovedPageRank {
 
     val sc = new SparkContext(conf)
 
-    val graph = GraphLoader.edgeListFile(sc, "src/main/resources/test_web.txt")
+    val graph = GraphLoader.edgeListFile(sc, "src/main/resources/web-Google.txt")
 
     //**********************计算顶点的出度数A,并更新edge的值为1/A以及更新顶点为1
 
@@ -36,9 +36,11 @@ object NewImprovedPageRank {
       EdgeType(1.0 / EdgeTriplet.attr, 1.0 / EdgeTriplet.attr)
     }
 
+
+
     //重新把顶点数据设置为一
     val inputGraph = weightedEdgesGraph.mapVertices((id, vData) =>
-      if(id < 4 ){
+      if(id < 600000 ){
         new NodeType(1.0, 1.0, false)
       }
       else{
@@ -87,7 +89,7 @@ object NewImprovedPageRank {
             Iterator((triplet.dstId, triplet.srcAttr.curData * (triplet.attr.curWeight - triplet.attr.prevWeight)))
           }
           else if(math.abs(triplet.srcAttr.prevData - triplet.srcAttr.curData) > 0.01){
-            Iterator((triplet.dstId, (triplet.srcAttr.curData - triplet.srcAttr.prevData) * triplet.attr.curWeight))
+            Iterator((triplet.dstId, math.abs(triplet.srcAttr.curData - triplet.srcAttr.prevData) * triplet.attr.curWeight))
           }
           else
             Iterator.empty
